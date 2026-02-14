@@ -115,5 +115,144 @@
 
 <body>
   <header class="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
-    <div cla
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-4">
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight">ZION</h1>
+        <span class="hidden md:inline text-sm text-zion-medium">Bring Out the Radiance</span>
+      </div>
 
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="#about" class="text-sm font-semibold text-zion-medium hover:text-gray-900 transition">브랜드</a>
+        <a href="#ai" class="text-sm font-semibold text-zion-medium hover:text-gray-900 transition">AI</a>
+        <a href="#shops" class="text-sm font-semibold text-zion-medium hover:text-gray-900 transition">카테고리</a>
+      </nav>
+
+      <div class="flex items-center gap-2">
+        <a href="beauty.html" class="btn-secondary">Beauty</a>
+        <a href="wellness.html" class="btn-primary">Wellness</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="py-10 md:py-0">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-2 min-h-[640px]">
+        <div class="flex flex-col justify-center px-4 md:px-10 py-12">
+          <p class="text-sm font-extrabold tracking-wide text-zion-medium mb-3">Zion's Core Innovation</p>
+          <h2 class="text-5xl md:text-6xl font-extrabold leading-tight mb-6">
+            과학을 통해<br>
+            본질의 빛을 <span class="text-green-700">회복</span>시키다
+          </h2>
+          <p class="text-lg md:text-xl text-zion-medium mb-8">
+            Beauty(샴푸)와 Wellness(보조제) 구매 페이지를 분리했습니다.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-3">
+            <a href="#shops" class="btn-primary">카테고리 바로가기</a>
+            <a href="#ai" class="btn-secondary">AI 슬로건</a>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=1600&h=1200&fit=crop"
+            alt="ZION main visual"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-black/15"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="py-16 md:py-20 bg-zion-section">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div class="card p-8">
+            <p class="text-xs font-extrabold uppercase tracking-wide text-zion-medium mb-2">Brand Story</p>
+            <h3 class="text-3xl md:text-4xl font-extrabold mb-4">균형을 설계하다</h3>
+            <p class="text-zion-medium">
+              Zion은 루틴과 경험 중심의 헬스·뷰티 브랜드 컨셉입니다.
+            </p>
+          </div>
+          <div class="card overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=1600&h=1200&fit=crop"
+              alt="Lab visual"
+              class="w-full h-80 object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ai" class="py-16 md:py-20 bg-ai">
+      <div class="max-w-4xl mx-auto px-4 text-center">
+        <h3 class="text-4xl font-extrabold mb-4 text-ai">AI 슬로건 생성</h3>
+        <p class="text-base md:text-lg text-ai opacity-90 mb-8">
+          서버가 연결된 환경이면 AI가 생성하고, 아니면 DEMO 슬로건이 표시됩니다.
+        </p>
+
+        <div class="card p-8 text-left">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <input
+              id="slogan-keywords"
+              type="text"
+              placeholder="키워드 입력 (예: 안전, 회복, 빛남)"
+              class="flex-grow p-3 border border-gray-300 rounded-xl"
+            />
+            <button id="slogan-button" onclick="generateSlogan()" class="btn-ai">슬로건 생성</button>
+          </div>
+
+          <div id="slogan-loading" class="hidden mt-4 text-ai font-extrabold">
+            <span class="animate-pulse">생성 중...</span>
+          </div>
+
+          <div id="slogan-result" class="mt-4 min-h-[60px]"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="shops" class="py-16 md:py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <p class="text-xs font-extrabold uppercase tracking-wide text-zion-medium mb-2">Shop Categories</p>
+        <h3 class="text-4xl md:text-5xl font-extrabold mb-10">원하는 스토어로 이동</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <a href="beauty.html" class="group relative overflow-hidden rounded-3xl shadow-lg h-96">
+            <img
+              src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1600&h=1200&fit=crop"
+              alt="Beauty shop"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-8 text-left">
+              <p class="text-white/80 text-sm font-extrabold mb-1">Beauty & Personal Care</p>
+              <h4 class="text-white text-4xl font-extrabold">샴푸 구매</h4>
+            </div>
+          </a>
+
+          <a href="wellness.html" class="group relative overflow-hidden rounded-3xl shadow-lg h-96">
+            <img
+              src="https://images.unsplash.com/photo-1585238342028-4e6fbe685a2a?w=1600&h=1200&fit=crop"
+              alt="Wellness shop"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+            <div class="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition"></div>
+            <div class="absolute bottom-0 left-0 right-0 p-8 text-left">
+              <p class="text-white/80 text-sm font-extrabold mb-1">Healthcare & Wellness</p>
+              <h4 class="text-white text-4xl font-extrabold">골든타임 보조제</h4>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-gray-50 text-gray-600 py-10 border-t border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 text-center text-sm">
+      <div class="text-xl font-extrabold text-gray-900 mb-2">ZION</div>
+      <p class="text-xs">&copy; 2025 Zion Corp. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
