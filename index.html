@@ -1,1 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZION - Main</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <style>
+    body { font-family:'Pretendard',sans-serif; background:#F8F8F8; color:#2F2F2F; line-height:1.6; }
+    .text-zion-medium { color:#7A7A7A; }
+    .bg-zion-section { background:#F2F2F2; }
+    .bg-ai { background:#E0F7FA; }
+    .text-ai { color:#00838F; }
+
+    .btn-primary {
+      background:#2F2F2F; color:#fff; padding:12px 22px; border-radius:12px;
+      font-weight:800; transition:all .15s ease;
+      display:inline-flex; align-items:center; justify-content:center;
+    }
+    .btn-primary:hover { background:#464646; }
+
+    .btn-secondary {
+      background:#fff; color:#2F2F2F; border:1px solid #D1D1D1;
+      padding:12px 22px; border-radius:12px; font-weight:800;
+      transition:all .15s ease;
+      display:inline-flex; align-items:center; justify-content:center;
+    }
+    .btn-secondary:hover { background:#F3F3F3; }
+
+    .btn-ai {
+      background:#00838F; color:#fff; padding:12px 18px; border-radius:12px;
+      font-weight:900; transition:all .15s ease;
+    }
+    .btn-ai:hover { background:#006064; }
+    .btn-ai:disabled { opacity:.6; cursor:not-allowed; }
+
+    .card {
+      background:#fff; border:1px solid #E5E7EB; border-radius:20px;
+      box-shadow: 0 6px 18px rgba(0,0,0,.04);
+    }
+  </style>
+
+  <script>
+    function escapeHtml(str='') {
+      return str.replace(/[&<>"']/g, m => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      }[m]));
+    }
+
+    // GitHub Pages(정적)에서는 서버(/api/slogan)가 없으면 실패할 수 있어,
+    // 실패 시 "데모 슬로건"을 보여주도록 안전장치까지 포함.
+    async function generateSlogan() {
+      const keywords = document.getElementById('slogan-keywords').value.trim();
+      const resultDiv = document.getElementById('slogan-result');
+      const btn = document.getElementById('slogan-button');
+      const loading = document.getElementById('slogan-loading');
+
+      if (!keywords) {
+        resultDiv.innerHTML = `<p class="text-red-600 font-medium">키워드를 1~3개 입력해 주세요.</p>`;
+        return;
+      }
+
+      loading.classList.remove('hidden');
+      btn.disabled = true;
+      resultDiv.innerHTML = '';
+
+      try {
+        const res = await fetch('./api/slogan', {   // 같은 도메인 서버가 있을 때 동작
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ keywords })
+        });
+
+        if (!res.ok) throw new Error(`API ${res.status}`);
+        const data = await res.json();
+
+        if (!data?.slogans?.length) throw new Error('No slogans');
+
+        renderSlogans(data.slogans, resultDiv);
+
+      } catch (e) {
+        // 정적 배포(GitHub Pages) 등에서 서버가 없으면 여기로 옴
+        const demo = [
+          { language: "Korean", text: `과학으로 빛나는 루틴, ${keywords}` },
+          { language: "English", text: `Science-made radiance, ${keywords}` }
+        ];
+        renderSlogans(demo, resultDiv, true);
+      } finally {
+        loading.classList.add('hidden');
+        btn.disabled = false;
+      }
+    }
+
+    function renderSlogans(slogans, resultDiv, isDemo=false) {
+      let html = `<div class="space-y-3 mt-4">`;
+      slogans.forEach(s => {
+        const lang = (s.language || '').toLowerCase();
+        const label = lang.includes('kor') ? '한국어' : 'English';
+        html += `
+          <div class="p-4 rounded-2xl border border-gray-200 bg-gray-50">
+            <p class="text-xs text-gray-500 mb-1">${label}${isDemo ? ' (DEMO)' : ''}</p>
+            <p class="text-lg font-extrabold">${escapeHtml(s.text)}</p>
+          </div>
+        `;
+      });
+      html += `</div>`;
+      resultDiv.innerHTML = html;
+    }
+  </script>
+</head>
+
+<body>
+  <header class="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
+    <div cla
 
