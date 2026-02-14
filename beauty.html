@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZION Beauty Shop - Shampoo</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <style>
+    body { font-family:'Pretendard',sans-serif; background:#F8F8F8; color:#2F2F2F; }
+    .card { background:#fff; border:1px solid #E5E7EB; border-radius:18px; }
+    .btn { background:#2F2F2F; color:#fff; padding:12px 18px; border-radius:12px; font-weight:800; }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
+  </style>
+</head>
+
+<body>
+  <header class="bg-white sticky top-0 z-50 shadow-sm border-b border-gray-100">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-2xl font-extrabold tracking-tight">ZION</a>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-sm text-gray-600 hover:text-gray-900">메인</a>
+        <a href="wellness.html" class="text-sm text-gray-600 hover:text-gray-900">웰니스로</a>
+        <span class="text-sm font-semibold">장바구니: <span id="cartCount">0</span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <section class="card overflow-hidden mb-6">
+      <div class="grid md:grid-cols-2">
+        <div class="p-8 md:p-10">
+          <p class="text-xs uppercase tracking-wide text-gray-500 mb-2">Beauty & Personal Care</p>
+          <h1 class="text-4xl font-extrabold mb-3">샴푸 구매</h1>
+          <p class="text-gray-600 mb-6">샴푸 상품 구매 데모 페이지입니다.</p>
+          <div class="flex gap-3">
+            <a href="#product" class="btn">상품 보기</a>
+            <a href="index.html" class="btn" style="background:#388E3C;">메인으로</a>
+          </div>
+        </div>
+        <div class="h-72 md:h-auto">
+          <img
+            src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1600&h=1200&fit=crop"
+            alt="Shampoo hero"
+            class="w-full h-full object-cover"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section id="product" class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 card p-6">
+        <div class="grid md:grid-cols-2 gap-6 items-start">
+          <img class="w-full h-80 object-cover rounded-2xl"
+               src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=1200&h=900&fit=crop"
+               alt="ZION Shampoo" />
+
+          <div>
+            <p class="text-sm text-gray-500 mb-2">ZION Beauty</p>
+            <h2 class="text-3xl font-extrabold mb-2">ZION SiZen Scalp Shampoo</h2>
+            <p class="text-gray-600 mb-4">데일리 샴푸 컨셉(데모).</p>
+
+            <div class="flex items-end gap-3 mb-6">
+              <span class="text-2xl font-extrabold">₩29,000</span>
+              <span class="text-sm text-gray-500">/ 300ml</span>
+            </div>
+
+            <div class="flex items-center gap-3 mb-6">
+              <label class="text-sm text-gray-700">수량</label>
+              <input id="qty" type="number" min="1" value="1"
+                     class="w-24 border border-gray-300 rounded-xl px-3 py-2" />
+            </div>
+
+            <div class="flex gap-3">
+              <button id="addToCart" class="btn">장바구니 담기</button>
+              <button id="buyNow" class="btn" style="background:#00838F;">바로 구매</button>
+            </div>
+
+            <p class="text-xs text-gray-500 mt-6">실제 결제는 처리되지 않습니다.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card p-6 h-fit">
+        <h3 class="text-xl font-extrabold mb-4">결제 정보(데모)</h3>
+
+        <div class="bg-gray-50 rounded-2xl p-4 border border-gray-200 mb-4">
+          <div class="flex justify-between text-sm mb-1"><span>상품 합계</span><span id="subtotal">₩0</span></div>
+          <div class="flex justify-between text-sm mb-1"><span>배송비</span><span id="shipping">₩0</span></div>
+          <div class="flex justify-between text-base font-extrabold mt-3"><span>총 결제금액</span><span id="total">₩0</span></div>
+        </div>
+
+        <form id="checkoutForm" class="space-y-3">
+          <input required name="name" placeholder="받는 분 성함"
+                 class="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white" />
+          <input required name="phone" placeholder="연락처"
+                 class="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white" />
+          <input required name="address" placeholder="주소"
+                 class="w-full border border-gray-300 rounded-xl px-3 py-2 bg-white" />
+          <button id="payBtn" class="btn w-full" type="submit" disabled>장바구니에 담아주세요</button>
+        </form>
+
+        <div id="toast" class="hidden mt-4 text-sm text-green-700 bg-green-50 border border-green-200 rounded-xl p-3"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const PRICE = 29000;
+    const state = { qty: 0 };
+
+    const el = (id) => document.getElementById(id);
+    const won = (n) => "₩" + n.toLocaleString("ko-KR");
+
+    function calcShipping(subtotal) {
+      if (subtotal <= 0) return 0;
+      return subtotal >= 50000 ? 0 : 3000;
+    }
+
+    function toast(msg) {
+      const t = el("toast");
+      t.textContent = msg;
+      t.classList.remove("hidden");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => t.classList.add("hidden"), 2500);
+    }
+
+    function render() {
+      const subtotal = state.qty * PRICE;
+      const shipping = calcShipping(subtotal);
+      const total = subtotal + shipping;
+
+      el("cartCount").textContent = state.qty;
+      el("subtotal").textContent = won(subtotal);
+      el("shipping").textContent = won(shipping);
+      el("total").textContent = won(total);
+
+      const payBtn = el("payBtn");
+      if (state.qty > 0) {
+        payBtn.disabled = false;
+        payBtn.textContent = `결제하기 (${won(total)})`;
+      } else {
+        payBtn.disabled = true;
+        payBtn.textContent = "장바구니에 담아주세요";
+      }
+    }
+
+    function addToCart(qty) {
+      const q = Math.max(1, parseInt(qty, 10) || 1);
+      state.qty += q;
+      render();
+      toast(`장바구니에 ${q}개 담았습니다.`);
+    }
+
+    el("addToCart").addEventListener("click", () => addToCart(el("qty").value));
+    el("buyNow").addEventListener("click", () => {
+      addToCart(el("qty").value);
+      document.querySelector("#checkoutForm input[name='name']").focus();
+    });
+
+    el("checkoutForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (state.qty <= 0) return;
+      state.qty = 0;
+      render();
+      e.target.reset();
+      toast("주문이 완료되었습니다(데모).");
+    });
+
+    render();
+  </script>
+</body>
+</html>
