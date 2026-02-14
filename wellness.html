@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GoldenTime Wellness - Supplements</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <style>
+    body { font-family:'Pretendard',sans-serif; background:#0B1220; color:#EAF0FF; }
+    .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius:18px; }
+    .btn { background:#F6C35C; color:#1B1B1B; padding:12px 18px; border-radius:12px; font-weight:900; }
+    .btn:disabled { opacity:.5; cursor:not-allowed; }
+    .muted { color: rgba(234,240,255,0.75); }
+  </style>
+</head>
+
+<body>
+  <header class="sticky top-0 z-50 backdrop-blur bg-black/30 border-b border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="wellness.html" class="text-xl font-extrabold tracking-tight">GoldenTime Wellness</a>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-sm muted hover:text-white">ZION 메인</a>
+        <a href="beauty.html" class="text-sm muted hover:text-white">뷰티로</a>
+        <span class="text-sm font-semibold">Cart: <span id="cartCount">0</span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 py-10">
+    <section class="card overflow-hidden mb-6">
+      <div class="grid md:grid-cols-2">
+        <div class="p-8 md:p-10">
+          <p class="text-xs uppercase tracking-wide muted mb-2">Wellness Supplements</p>
+          <h1 class="text-4xl font-extrabold mb-3">골든타임 보조제 식품 구매</h1>
+          <p class="muted mb-6">루틴형 보조제 컨셉(데모 스토어).</p>
+          <div class="flex gap-3">
+            <a href="#product" class="btn">상품 보기</a>
+            <a href="index.html" class="btn" style="background:#8AD0FF;">ZION 메인</a>
+          </div>
+          <p class="text-xs muted mt-4">실제 결제는 처리되지 않습니다.</p>
+        </div>
+        <div class="h-72 md:h-auto">
+          <img
+            src="https://images.unsplash.com/photo-1585238342028-4e6fbe685a2a?w=1600&h=1200&fit=crop"
+            alt="Wellness hero"
+            class="w-full h-full object-cover opacity-90"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section id="product" class="grid lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 card p-6">
+        <div class="grid md:grid-cols-2 gap-6 items-start">
+          <img class="w-full h-80 object-cover rounded-2xl"
+               src="https://images.unsplash.com/photo-1585238342028-4e6fbe685a2a?w=1200&h=900&fit=crop"
+               alt="GoldenTime supplement" />
+
+          <div>
+            <p class="text-sm muted mb-2">GoldenTime</p>
+            <h2 class="text-3xl font-extrabold mb-2">GoldenTime Daily Support</h2>
+            <p class="muted mb-4">데일리 보조제 식품 컨셉(데모).</p>
+
+            <div class="flex items-end gap-3 mb-6">
+              <span class="text-2xl font-extrabold">₩39,000</span>
+              <span class="text-sm muted">/ 30일분</span>
+            </div>
+
+            <div class="flex items-center gap-3 mb-6">
+              <label class="text-sm muted">수량</label>
+              <input id="qty" type="number" min="1" value="1"
+                     class="w-24 rounded-xl px-3 py-2 bg-white/10 border border-white/15 text-white" />
+            </div>
+
+            <div class="flex gap-3">
+              <button id="addToCart" class="btn">장바구니 담기</button>
+              <button id="buyNow" class="btn" style="background:#F090C2;">바로 구매</button>
+            </div>
+
+            <div class="text-xs muted mt-6">
+              안내: 이 페이지는 “식품” 컨셉 데모이며 효능을 단정하지 않습니다.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="card p-6 h-fit">
+        <h3 class="text-xl font-extrabold mb-4">결제 정보(데모)</h3>
+
+        <div class="rounded-2xl p-4 border border-white/10 bg-white/5 mb-4">
+          <div class="flex justify-between text-sm mb-1"><span class="muted">상품 합계</span><span id="subtotal">₩0</span></div>
+          <div class="flex justify-between text-sm mb-1"><span class="muted">배송비</span><span id="shipping">₩0</span></div>
+          <div class="flex justify-between text-base font-extrabold mt-3"><span>총 결제금액</span><span id="total">₩0</span></div>
+        </div>
+
+        <form id="checkoutForm" class="space-y-3">
+          <input required name="name" placeholder="받는 분 성함"
+                 class="w-full rounded-xl px-3 py-2 bg-white/10 border border-white/15 text-white placeholder:text-white/60" />
+          <input required name="phone" placeholder="연락처"
+                 class="w-full rounded-xl px-3 py-2 bg-white/10 border border-white/15 text-white placeholder:text-white/60" />
+          <input required name="address" placeholder="주소"
+                 class="w-full rounded-xl px-3 py-2 bg-white/10 border border-white/15 text-white placeholder:text-white/60" />
+          <button id="payBtn" class="btn w-full" type="submit" disabled>장바구니에 담아주세요</button>
+        </form>
+
+        <div id="toast" class="hidden mt-4 text-sm text-black bg-yellow-200 border border-yellow-100 rounded-xl p-3"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const PRICE = 39000;
+    const state = { qty: 0 };
+
+    const el = (id) => document.getElementById(id);
+    const won = (n) => "₩" + n.toLocaleString("ko-KR");
+
+    function calcShipping(subtotal) {
+      if (subtotal <= 0) return 0;
+      return subtotal >= 50000 ? 0 : 3000;
+    }
+
+    function toast(msg) {
+      const t = el("toast");
+      t.textContent = msg;
+      t.classList.remove("hidden");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => t.classList.add("hidden"), 2500);
+    }
+
+    function render() {
+      const subtotal = state.qty * PRICE;
+      const shipping = calcShipping(subtotal);
+      const total = subtotal + shipping;
+
+      el("cartCount").textContent = state.qty;
+      el("subtotal").textContent = won(subtotal);
+      el("shipping").textContent = won(shipping);
+      el("total").textContent = won(total);
+
+      const payBtn = el("payBtn");
+      if (state.qty > 0) {
+        payBtn.disabled = false;
+        payBtn.textContent = `결제하기 (${won(total)})`;
+      } else {
+        payBtn.disabled = true;
+        payBtn.textContent = "장바구니에 담아주세요";
+      }
+    }
+
+    function addToCart(qty) {
+      const q = Math.max(1, parseInt(qty, 10) || 1);
+      state.qty += q;
+      render();
+      toast(`장바구니에 ${q}개 담았습니다.`);
+    }
+
+    el("addToCart").addEventListener("click", () => addToCart(el("qty").value));
+    el("buyNow").addEventListener("click", () => {
+      addToCart(el("qty").value);
+      document.querySelector("#checkoutForm input[name='name']").focus();
+    });
+
+    el("checkoutForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (state.qty <= 0) return;
+      state.qty = 0;
+      render();
+      e.target.reset();
+      toast("주문이 완료되었습니다(데모).");
+    });
+
+    render();
+  </script>
+</body>
+</html>
